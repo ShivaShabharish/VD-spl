@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Pavi 💙</title>
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI';
+height:100vh;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(180deg,#cfe9ff,#e9d7ff,#ffffff);
+cursor:none;
+}
+
+/* SPARKLE CURSOR */
+.sparkle{
+position:fixed;
+pointer-events:none;
+font-size:14px;
+animation:sparkleFade 1s linear forwards;
+z-index:50;
+}
+@keyframes sparkleFade{
+0%{opacity:1; transform:translateY(0);}
+100%{opacity:0; transform:translateY(-20px);}
+}
+
+/* PASSWORD SCREEN */
+.password-screen{
+position:fixed;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(180deg,#cfe9ff,#e9d7ff,#ffffff);
+z-index:20;
+flex-direction:column;
+}
+.password-box{
+background:rgba(255,255,255,0.5);
+padding:40px;
+border-radius:20px;
+backdrop-filter:blur(12px);
+text-align:center;
+}
+input{
+padding:12px;
+border-radius:10px;
+border:none;
+margin-top:10px;
+}
+button{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:#1e90ff;
+color:white;
+margin-top:15px;
+cursor:pointer;
+}
+
+/* COUNTDOWN */
+.countdown{
+position:fixed;
+font-size:120px;
+color:#1e90ff;
+z-index:19;
+display:none;
+}
+
+/* SMALL FIREWORK */
+.firework{
+position:fixed;
+width:8px;
+height:8px;
+border-radius:50%;
+background:white;
+animation:explode 1s ease-out forwards;
+pointer-events:none;
+z-index:18;
+}
+@keyframes explode{
+0%{transform:scale(1);opacity:1;}
+100%{transform:scale(10);opacity:0;}
+}
+
+/* INVITE */
+.invite-screen{
+position:fixed;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:10;
+}
+.invite-card{
+background:rgba(255,255,255,0.4);
+padding:50px;
+border-radius:22px;
+backdrop-filter:blur(14px);
+text-align:center;
+}
+
+/* VALENTINE */
+.card{
+background:rgba(255,255,255,0.35);
+padding:45px;
+border-radius:22px;
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+text-align:center;
+width:360px;
+z-index:2;
+display:none;
+}
+
+.name-bg{
+position:fixed;
+font-size:120px;
+font-weight:bold;
+color:rgba(30,144,255,0.08);
+z-index:0;
+user-select:none;
+}
+
+.falling{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:0;
+}
+.falling span{
+position:absolute;
+font-size:20px;
+animation:fall linear infinite;
+opacity:0.8;
+}
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(110vh);}
+}
+
+/* VIDEO PAGE */
+.video-page{
+display:none;
+position:fixed;
+inset:0;
+background:#000;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:5;
+}
+.video-page video{
+height:80vh;
+transform:rotate(-90deg);
+object-fit:contain;
+}
+
+/* FINAL MESSAGE */
+.final-message{
+display:none;
+position:fixed;
+inset:0;
+background:black;
+color:white;
+align-items:center;
+justify-content:center;
+text-align:center;
+font-size:28px;
+padding:40px;
+z-index:7;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+<source src="the_metro_proposal.mp3" type="audio/mp3">
+</audio>
+
+<div class="password-screen" id="passScreen">
+<div class="password-box">
+<h2>Enter the secret 💙</h2>
+<input type="password" id="passInput">
+<br>
+<button onclick="checkPassword()">Enter</button>
+</div>
+</div>
+
+<div class="countdown" id="countdown">3</div>
+
+<div class="invite-screen" id="invite">
+<div class="invite-card">
+<h1>For Pavi 💙</h1>
+<p>A small surprise waiting...</p>
+<button onclick="startValentine()">Open 💌</button>
+</div>
+</div>
+
+<div class="name-bg">Pavi 💙</div>
+<div class="falling" id="falling"></div>
+
+<div class="card" id="valentineCard">
+<h1>Will you be mine, Pavi? 💙</h1>
+<p>You Complete Me...</p>
+<button id="yesBtn">Yes 💙</button>
+<button id="noBtn">No 😢</button>
+</div>
+
+<div class="video-page" id="videoPage">
+<video id="loveVideo" controls>
+<source src="love.mp4" type="video/mp4">
+</video>
+</div>
+
+<div class="final-message" id="finalMsg">
+<div>
+I only knew pain until you gave me life and hope and love,<br>
+Shall we grow together the same, my empress, forever and above?
+<br><br>
+<button onclick="grandCelebration()">Yes 🎆</button>
+</div>
+</div>
+
+<script>
+
+/* SPARKLE CURSOR */
+document.addEventListener('mousemove', e => createSparkle(e.pageX,e.pageY));
+document.addEventListener('touchmove', e=>{
+const t=e.touches[0];
+createSparkle(t.pageX,t.pageY);
+});
+function createSparkle(x,y){
+const spark=document.createElement('div');
+spark.className='sparkle';
+spark.innerText='✨';
+spark.style.left=x+'px';
+spark.style.top=y+'px';
+document.body.appendChild(spark);
+setTimeout(()=>spark.remove(),900);
+}
+
+/* PASSWORD */
+function checkPassword(){
+if(document.getElementById('passInput').value==="SP2018"){
+document.getElementById('passScreen').style.display='none';
+startCountdown();
+}
+}
+
+/* COUNTDOWN */
+function startCountdown(){
+let num=3;
+const el=document.getElementById('countdown');
+el.style.display='block';
+const interval=setInterval(()=>{
+el.innerText=num;
+num--;
+if(num<0){
+clearInterval(interval);
+el.style.display='none';
+startCrackers();
+}
+},1000);
+}
+
+/* SMALL CRACKERS */
+function startCrackers(){
+let duration=5000;
+let interval=setInterval(()=>{
+for(let i=0;i<10;i++){
+let fw=document.createElement('div');
+fw.className='firework';
+fw.style.left=Math.random()*window.innerWidth+'px';
+fw.style.top=Math.random()*window.innerHeight+'px';
+document.body.appendChild(fw);
+setTimeout(()=>fw.remove(),1000);
+}
+},200);
+
+setTimeout(()=>{
+clearInterval(interval);
+document.getElementById('invite').style.display='flex';
+},duration);
+}
+
+/* START VALENTINE */
+function startValentine(){
+document.getElementById('invite').style.display='none';
+document.getElementById('valentineCard').style.display='block';
+bgMusic.volume=0.35;
+bgMusic.play();
+}
+
+/* YES */
+yesBtn.onclick=function(){
+bgMusic.pause();
+bgMusic.currentTime=0;
+document.getElementById('valentineCard').style.display='none';
+videoPage.style.display='flex';
+loveVideo.play();
+}
+
+/* VIDEO END */
+loveVideo.onended=function(){
+videoPage.style.display='none';
+finalMsg.style.display='flex';
+}
+
+/* NO RUN */
+noBtn.onmouseover=function(){
+const i=Math.random()*300-150;
+const j=Math.random()*300-150;
+noBtn.style.transform=`translate(${i}px,${j}px)`;
+}
+
+/* HEARTS */
+setInterval(()=>{
+let span=document.createElement('span');
+span.innerText='💙';
+span.style.left=Math.random()*100+'vw';
+span.style.animationDuration=(4+Math.random()*4)+'s';
+document.getElementById('falling').appendChild(span);
+setTimeout(()=>span.remove(),8000);
+},350);
+
+/* GRAND CELEBRATION FIREWORKS */
+function grandCelebration(){
+for(let i=0;i<60;i++){
+setTimeout(()=>{ createBigFirework(); }, i*120);
+}
+}
+
+function createBigFirework(){
+const colors=['#1e90ff','#ffffff','#ff69b4','#ffd700','#00ffff'];
+for(let i=0;i<25;i++){
+const fw=document.createElement('div');
+fw.style.position='fixed';
+fw.style.width='6px';
+fw.style.height='6px';
+fw.style.borderRadius='50%';
+fw.style.background=colors[Math.floor(Math.random()*colors.length)];
+fw.style.left=Math.random()*window.innerWidth+'px';
+fw.style.top=Math.random()*window.innerHeight+'px';
+fw.style.zIndex='100';
+
+fw.animate([
+{transform:'scale(1)',opacity:1},
+{transform:'translate('+(Math.random()*400-200)+'px,'+(Math.random()*400-200)+'px) scale(4)',opacity:0}
+],{duration:1200,easing:'ease-out'});
+
+document.body.appendChild(fw);
+setTimeout(()=>fw.remove(),1200);
+}
+}
+</script>
+
+</body>
+</html>
